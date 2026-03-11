@@ -23,7 +23,7 @@ curl --silent --show-error \
     \"region\": \"Moscow\",
     \"participantStatus\": \"Высшее образование\",
     \"email\": \"${EMAIL}\",
-    \"track\": \"track_1\"
+    \"track\": \"finance\"
   }" | cat
 
 echo
