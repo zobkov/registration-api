@@ -29,14 +29,14 @@ class ParticipantStatus(str, Enum):
 
 
 class Track(str, Enum):
-    finance = "track_1"
-    logistics = "track_2"
-    consulting = "track_3"
-    politics = "track_4"
-    marketing = "track_5"
-    language = "track_6"
-    chinese = "track_7"
-    rosmolodezh_grants = "track_8"
+    finance = "finance"
+    logistics = "logistics"
+    consulting = "consulting"
+    politics = "politics"
+    marketing = "marketing"
+    language = "language"
+    chinese = "chinese"
+    rosmolodezh_grants = "rosmolodezh_grants"
 
 
 class RegistrationCreate(BaseModel):
