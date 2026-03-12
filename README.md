@@ -77,6 +77,9 @@ Notes:
 - `deploy.sh` executes `alembic upgrade head` before starting the API service.
 - Current setup is HTTP only (no TLS/HTTPS in this stage).
 
+Troubleshooting:
+- If deploy fails with DB connection timeout, verify PostgreSQL is reachable from inside the container and not only from host localhost.
+
 ## Production systemd (hardened)
 
 1. Create a dedicated system user:

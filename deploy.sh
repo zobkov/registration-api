@@ -35,6 +35,12 @@ git pull --ff-only
 echo "Building and starting containers..."
 docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" up -d --build --no-start
 
+echo "Checking DB connectivity from container..."
+if ! docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" run --rm --no-deps api python -c "import os, socket, sys; host=os.environ['db_host']; port=int(os.environ['db_port']); s=socket.socket(); s.settimeout(5); s.connect((host, port)); s.close(); print(f'DB reachable: {host}:{port}')"; then
+  echo "Database is not reachable from container. Check db_host/db_port, PostgreSQL listen_addresses, firewall and pg_hba.conf"
+  exit 1
+fi
+
 echo "Running database migrations..."
 docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" run --rm --no-deps api alembic upgrade head
 
