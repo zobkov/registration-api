@@ -44,7 +44,7 @@ class RegistrationCreate(BaseModel):
     status: RegistrationStatus
     transport: TransportType
     carNumber: str | None = Field(default=None, max_length=24)
-    passport: str = Field(min_length=3, max_length=30)
+    passport: str | None = Field(default=None, min_length=3, max_length=30)
     adult18: Adult18 | None = None
     region: str | None = Field(default=None, min_length=2, max_length=120)
     participantStatus: ParticipantStatus | None = None

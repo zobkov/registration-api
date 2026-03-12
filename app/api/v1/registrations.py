@@ -57,7 +57,7 @@ def create_registration(
             track=payload.track.value if payload.track else None,
             transport=payload.transport.value,
             car_number=payload.carNumber,
-            passport=payload.passport.replace(" ", ""),
+            passport=payload.passport.replace(" ", "") if payload.passport else None,
             education=payload.education,
             numeric_key=generate_numeric_key(),
         )

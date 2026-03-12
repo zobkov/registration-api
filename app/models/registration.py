@@ -28,7 +28,7 @@ class SiteRegistration(Base):
     track: Mapped[str | None] = mapped_column(String(32), nullable=True)
     transport: Mapped[str] = mapped_column(String(64), nullable=False)
     car_number: Mapped[str | None] = mapped_column(String(24), nullable=True)
-    passport: Mapped[str] = mapped_column(Text, nullable=False)
+    passport: Mapped[str | None] = mapped_column(Text, nullable=True)
     education: Mapped[str | None] = mapped_column(String(120), nullable=True)
     numeric_key: Mapped[str] = mapped_column(String(6), nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, server_default=func.now())
