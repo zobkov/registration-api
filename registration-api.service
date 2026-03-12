@@ -1,0 +1,38 @@
+[Unit]
+Description=Registration API (FastAPI + Uvicorn)
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=registration-api
+Group=registration-api
+WorkingDirectory=/opt/registration-api
+EnvironmentFile=/etc/registration-api/registration-api.env
+ExecStart=/opt/registration-api/.venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --proxy-headers --forwarded-allow-ips=127.0.0.1
+Restart=always
+RestartSec=5
+UMask=0077
+StandardOutput=journal
+StandardError=journal
+
+# Hardening
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectControlGroups=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectKernelLogs=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictRealtime=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+SystemCallArchitectures=native
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+[Install]
+WantedBy=multi-user.target
