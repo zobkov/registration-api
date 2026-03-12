@@ -1,7 +1,8 @@
 from functools import lru_cache
+from typing import Annotated
 
 from pydantic import AnyHttpUrl, field_validator
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -15,7 +16,7 @@ class Settings(BaseSettings):
 
     app_name: str = "Registration API"
     api_prefix: str = "/api/v1"
-    cors_origins: list[AnyHttpUrl] = [
+    cors_origins: Annotated[list[AnyHttpUrl], NoDecode] = [
         "https://zobkov-server.ru",
         "https://www.zobkov-server.ru",
         "https://zobkov.github.io",
