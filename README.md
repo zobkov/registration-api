@@ -34,6 +34,49 @@ Optional arguments:
 ./scripts/smoke_post_registration.sh http://127.0.0.1:8000 custom.email@example.com
 ```
 
+## Production via Docker (simple)
+
+This flow runs only the API in Docker and uses an external PostgreSQL instance.
+
+1. Prepare environment file:
+
+```bash
+cp .env.prod.example .env.prod
+```
+
+2. Fill real PostgreSQL values in `.env.prod`:
+
+```bash
+db_user=...
+db_pass=...
+db_name=...
+db_host=...
+db_port=5432
+```
+
+3. Build and run API:
+
+```bash
+docker compose --env-file .env.prod -f docker-compose.prod.yml up -d --build
+```
+
+4. Verify health:
+
+```bash
+curl http://127.0.0.1:8000/health
+```
+
+5. One-command redeploy:
+
+```bash
+chmod +x deploy.sh
+./deploy.sh
+```
+
+Notes:
+- Container startup applies DB migrations automatically via `alembic upgrade head`.
+- Current setup is HTTP only (no TLS/HTTPS in this stage).
+
 ## Production systemd (hardened)
 
 1. Create a dedicated system user:
