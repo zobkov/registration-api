@@ -74,7 +74,7 @@ chmod +x deploy.sh
 ```
 
 Notes:
-- Container startup applies DB migrations automatically via `alembic upgrade head`.
+- `deploy.sh` executes `alembic upgrade head` before starting the API service.
 - Current setup is HTTP only (no TLS/HTTPS in this stage).
 
 ## Production systemd (hardened)

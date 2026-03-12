@@ -33,11 +33,17 @@ echo "Pulling latest code..."
 git pull --ff-only
 
 echo "Building and starting containers..."
-docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" up -d --build
+docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" up -d --build --no-start
+
+echo "Running database migrations..."
+docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" run --rm --no-deps api alembic upgrade head
+
+echo "Starting API service..."
+docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" up -d api
 
 echo "Waiting for API health..."
 if command -v curl >/dev/null 2>&1; then
-  for _ in {1..30}; do
+  for _ in {1..60}; do
     if curl -fsS "$HEALTH_URL" >/dev/null 2>&1; then
       echo "Deploy successful: $HEALTH_URL"
       exit 0
@@ -46,7 +52,7 @@ if command -v curl >/dev/null 2>&1; then
   done
 else
   echo "curl is not available, checking container health status"
-  for _ in {1..30}; do
+  for _ in {1..60}; do
     container_id=$(docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" ps -q api)
     if [[ -n "$container_id" ]]; then
       status=$(docker inspect --format='{{if .State.Health}}{{.State.Health.Status}}{{else}}{{.State.Status}}{{end}}' "$container_id")
