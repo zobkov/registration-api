@@ -58,6 +58,7 @@ def create_registration(
             transport=payload.transport.value,
             car_number=payload.carNumber,
             passport=payload.passport.replace(" ", ""),
+            education=payload.education,
             numeric_key=generate_numeric_key(),
         )
 

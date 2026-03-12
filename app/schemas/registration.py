@@ -50,6 +50,7 @@ class RegistrationCreate(BaseModel):
     participantStatus: ParticipantStatus | None = None
     email: EmailStr
     track: Track | None = None
+    education: str | None = Field(default=None, max_length=120)
 
     @model_validator(mode="after")
     def validate_conditional_rules(self) -> "RegistrationCreate":
