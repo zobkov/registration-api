@@ -28,6 +28,31 @@ Expected response:
 ./scripts/smoke_post_registration.sh
 ```
 
+## Main POST (добавление в БД)
+
+- Метод/путь: `POST /api/v1/registrations`
+- `Content-Type: application/json`
+- Успех: `201` + `id`, `numericKey`, `createdAt`
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/v1/registrations \
+	-H "Content-Type: application/json" \
+	-d '{
+		"fullName":"Иван Иванов",
+		"status":"participant",
+		"transport":"Онлайн",
+		"carNumber":null,
+		"passport":"1234 567890",
+		"adult18":"Да",
+		"region":"Москва",
+		"participantStatus":"Высшее образование",
+		"email":"ivan@example.com",
+		"track":"finance"
+	}'
+```
+
+Ошибки кратко: `400` (валидация), `409` (email уже есть), `429` (лимит), `500` (сервер).
+
 Optional arguments:
 
 ```bash

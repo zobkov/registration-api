@@ -32,6 +32,11 @@ async def health_check() -> JSONResponse:
     return JSONResponse(status_code=200, content={"status": "ok"})
 
 
+@app.get("/")
+async def root_check() -> JSONResponse:
+    return JSONResponse(status_code=200, content={"status": "ok"})
+
+
 @app.exception_handler(RequestValidationError)
 async def request_validation_exception_handler(_: Request, exc: RequestValidationError) -> JSONResponse:
     errors = [err.get("msg", "validation error") for err in exc.errors()]
