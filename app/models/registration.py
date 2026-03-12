@@ -11,9 +11,11 @@ class SiteRegistration(Base):
     __tablename__ = "site_registrations"
     __table_args__ = (
         UniqueConstraint("email", name="uq_site_registrations_email"),
+        UniqueConstraint("numeric_key", name="uq_site_registrations_numeric_key"),
         Index("ix_site_registrations_created_at", "created_at"),
         Index("ix_site_registrations_status", "status"),
         Index("ix_site_registrations_email", "email"),
+        Index("ix_site_registrations_numeric_key", "numeric_key"),
     )
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -27,4 +29,5 @@ class SiteRegistration(Base):
     transport: Mapped[str] = mapped_column(String(64), nullable=False)
     car_number: Mapped[str | None] = mapped_column(String(24), nullable=True)
     passport: Mapped[str] = mapped_column(Text, nullable=False)
+    numeric_key: Mapped[str] = mapped_column(String(6), nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, server_default=func.now())

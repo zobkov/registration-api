@@ -73,6 +73,7 @@ class RegistrationCreate(BaseModel):
 
 class RegistrationCreateResponse(BaseModel):
     id: str
+    numericKey: str
     status: str = "created"
     createdAt: datetime
 

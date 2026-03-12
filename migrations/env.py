@@ -1,4 +1,5 @@
 from logging.config import fileConfig
+import os
 
 from alembic import context
 from sqlalchemy import engine_from_config, pool
@@ -9,8 +10,25 @@ from app.models import registration  # noqa: F401
 
 
 config = context.config
-settings = get_settings()
-config.set_main_option("sqlalchemy.url", settings.sqlalchemy_database_uri)
+
+
+def _resolve_database_url() -> str:
+    # Prefer explicit migration/runtime URL overrides.
+    env_database_url = os.getenv("DATABASE_URL")
+    if env_database_url:
+        return env_database_url
+
+    configured_url = config.get_main_option("sqlalchemy.url")
+
+    try:
+        return get_settings().sqlalchemy_database_uri
+    except Exception:
+        if configured_url:
+            return configured_url
+        raise
+
+
+config.set_main_option("sqlalchemy.url", _resolve_database_url())
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
