@@ -19,6 +19,7 @@ class Settings(BaseSettings):
         "https://zobkov-server.ru",
         "https://www.zobkov-server.ru",
         "https://zobkov.github.io",
+        "http://45.90.217.194",
     ]
     rate_limit_create_registration: str = "30/minute"
 
