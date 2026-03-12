@@ -84,13 +84,13 @@ sudo apt install -y nginx certbot python3-certbot-nginx
 sudo mkdir -p /var/www/certbot
 ```
 
-2. Copy and enable config from [nginx/registration-api.conf](nginx/registration-api.conf):
+2. Copy and enable bootstrap HTTP config from [nginx/registration-api.conf](nginx/registration-api.conf):
 
 ```bash
 sudo cp /opt/registration-api/nginx/registration-api.conf /etc/nginx/sites-available/registration-api
 sudo ln -sf /etc/nginx/sites-available/registration-api /etc/nginx/sites-enabled/registration-api
 sudo nginx -t
-sudo systemctl reload nginx
+sudo systemctl restart nginx
 ```
 
 3. Ensure DNS points your domain to the server IP, then issue TLS certificate:
@@ -99,7 +99,7 @@ sudo systemctl reload nginx
 sudo certbot --nginx -d forum-cbc.ru -d www.forum-cbc.ru
 ```
 
-4. Verify from outside server:
+4. Verify HTTPS from outside server:
 
 ```bash
 curl -i https://forum-cbc.ru/health
