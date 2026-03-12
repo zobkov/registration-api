@@ -16,7 +16,8 @@ class Settings(BaseSettings):
     app_name: str = "Registration API"
     api_prefix: str = "/api/v1"
     cors_origins: list[AnyHttpUrl] = [
-        "https://forum-cbc.ru",
+        "https://zobkov-server.ru",
+        "https://www.zobkov-server.ru",
         "https://zobkov.github.io",
     ]
     rate_limit_create_registration: str = "30/minute"

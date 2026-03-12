@@ -96,17 +96,24 @@ sudo systemctl restart nginx
 3. Ensure DNS points your domain to the server IP, then issue TLS certificate:
 
 ```bash
-sudo certbot --nginx -d forum-cbc.ru -d www.forum-cbc.ru
+sudo certbot --nginx -d zobkov-server.ru -d www.zobkov-server.ru
 ```
 
 4. Verify HTTPS from outside server:
 
 ```bash
-curl -i https://forum-cbc.ru/health
+curl -i https://zobkov-server.ru/health
 ```
 
 If certificate is not issued yet, test HTTP first:
 
 ```bash
-curl -i http://forum-cbc.ru/health
+curl -i http://zobkov-server.ru/health
+```
+
+If nginx cannot start because port 80 is busy:
+
+```bash
+sudo ss -ltnp | grep :80
+sudo lsof -iTCP:80 -sTCP:LISTEN -n -P
 ```
