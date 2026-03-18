@@ -40,17 +40,17 @@ class Track(str, Enum):
 
 
 class RegistrationCreate(BaseModel):
-    fullName: str = Field(min_length=2, max_length=200)
+    fullName: str = Field(min_length=2, max_length=300)
     status: RegistrationStatus
     transport: TransportType
     carNumber: str | None = Field(default=None, max_length=24)
     passport: str | None = Field(default=None, min_length=3, max_length=30)
     adult18: Adult18 | None = None
-    region: str | None = Field(default=None, min_length=2, max_length=120)
+    region: str | None = Field(default=None, min_length=2, max_length=300)
     participantStatus: ParticipantStatus | None = None
     email: EmailStr
     track: Track | None = None
-    education: str | None = Field(default=None, max_length=120)
+    education: str | None = Field(default=None, max_length=300)
 
     @model_validator(mode="after")
     def validate_conditional_rules(self) -> "RegistrationCreate":
