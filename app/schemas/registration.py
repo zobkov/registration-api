@@ -51,6 +51,7 @@ class RegistrationCreate(BaseModel):
     email: EmailStr
     track: Track | None = None
     education: str | None = Field(default=None, max_length=300)
+    officialInvitation: bool = False
 
     @model_validator(mode="after")
     def validate_conditional_rules(self) -> "RegistrationCreate":

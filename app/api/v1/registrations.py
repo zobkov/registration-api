@@ -59,6 +59,7 @@ def create_registration(
             car_number=payload.carNumber,
             passport=payload.passport.replace(" ", "") if payload.passport else None,
             education=payload.education,
+            official_invitation=payload.officialInvitation,
             numeric_key=generate_numeric_key(),
         )
 
